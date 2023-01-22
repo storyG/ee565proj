@@ -83,6 +83,8 @@ public class RequestHandler extends Thread {
         String filename = parts[1].substring(1);
 
         System.out.println(filename);
+        System.out.println(filename);
+
         filename = "content/" + filename;
         File resource = new File(filename);
         sendResponse(resource, rng, lo, hi);
