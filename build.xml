@@ -1,0 +1,12 @@
+<project name="Project1" default="compile">
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <target name="init">
+        <mkdir dir="${build}"/>
+    </target>
+    <target name="compile" depends="init">
+<!--        <javac includeantruntime="false" srcdir="${src}" destdir="${build}"/>-->
+        <javac includeantruntime="false" srcdir="${src}" destdir=""/>
+    </target>
+
+</project>
