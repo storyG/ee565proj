@@ -159,16 +159,19 @@ public class RequestHandler extends Thread {
                     </body>
                     </html>""";
             byte[] temp = errorText.getBytes("UTF-8");
-            Response("404", "", additionalHeader, temp);
+            Response("404", "", "", temp);
         } else {
             byte[] fileContent = Files.readAllBytes(resource.toPath());
             System.out.println(fileContent.length);
+            int originFileLength = fileContent.length;
 
             if (!rng){
+                additionalHeader = "Content-Range: bytes " + 0 + "-" + originFileLength + "/" + originFileLength + "\r\n" + additionalHeader;
                 Response("200", Files.probeContentType(resource.toPath()), additionalHeader, fileContent);
             } else {
                 fileContent = Arrays.copyOfRange(fileContent,lo,hi);
                 System.out.println(fileContent.length);
+                additionalHeader = "Content-Range: bytes " + lo + "-" + hi + "/" + originFileLength + "\r\n" + additionalHeader;
                 Response("206", Files.probeContentType(resource.toPath()), additionalHeader, fileContent);
             }
 
@@ -194,7 +197,7 @@ public class RequestHandler extends Thread {
         if (status.equals("404") || status.equals("500")) {
             response = (
                     "HTTP/1.1 " + status + "\r\n"
-                            + additionalHeader + "\r\n"
+                            + additionalHeader + "\r\n\r\n"
             ).getBytes("UTF-8");
         } else {
             response = (
@@ -203,7 +206,7 @@ public class RequestHandler extends Thread {
                             + "Connection: keep-alive" + "\r\n"
                             + "Content-Length: " + content.length + "\r\n"
                             + "Content-Type: " + contentType + "\r\n"
-                            + additionalHeader + "\r\n"
+                            + additionalHeader + "\r\n\r\n"
             ).getBytes("UTF-8");
         }
 
