@@ -1,8 +1,20 @@
+// ShihYu Gu, CheFu Chu
+// EE 565
+// Project1
+
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+// The main class of the VodServer.
 public class VodServer {
+
+    // This is the main method of the VodServer,
+    // Only accept get request.
+    // The PortNumber is set to 8000 if not specified.
+    // Initialize a RequestHandler if the connection is accepted,
+    // Else throw an IOException error.
     public static void main(String[] args) throws IOException {
 
         ServerSocket serverSocket = null;
@@ -22,7 +34,7 @@ public class VodServer {
         }
 
 
-        System.out.println ("Waiting for connection.....");
+        System.out.println ("Waiting for connection on port: " + PortNumber + " ....");
 
         try {
             while(true) {
